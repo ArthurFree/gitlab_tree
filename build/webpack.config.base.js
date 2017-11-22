@@ -22,18 +22,9 @@ module.exports = {
 	resolve: {
 		modules: [resolve('node_modules'), resolve('src')],
 		extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css', '.less'],
-		alias: {
-			// 'assets': resolve('./src/assets'),
-            // 'actions': resolve('./src/actions'),
-            // 'reducers': resolve('./src/reducers'),
-            // 'actionType': resolve('./src/constants/actionType.js'),
-            'stores': resolve('./src/stores'),
-            'utils': resolve('./src/utils'),
-            'components': resolve('./src/components'),
-            'constants': resolve('./src/constants'),
-            'react': 'preact-compat',
-            'react-dom': 'preact-compat'
-		}
+		// alias: {
+
+		// }
 	},
 
 	module: {

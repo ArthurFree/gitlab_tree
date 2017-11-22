@@ -1,4 +1,7 @@
+import Test from './test';
+
 const stores = {
+    Test
     // ...store
 };
 

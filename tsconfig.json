@@ -1,12 +1,16 @@
 {
 	"compilerOptions": {
-		"outDir": "./dist/",
+        "outDir": "./dist/",
+        "baseUrl": "./",
+        "paths":{
+            "stores": ["src/stores/index.ts"],
+            "utils": ["src/utils/index.ts"]
+        },
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"module": "commonjs",
+        "module": "commonjs",
 		"target": "es5",
         "jsx": "react",
-        "jsxFactory": "h",
         "lib": ["es6", "dom"],
         "experimentalDecorators": true
 	},

@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
-import utils from '../utils';
 import { GetTopicParam } from '../interface';
+import utils from 'utils';
 
 class Test {
     @observable list: any = [];
@@ -17,3 +17,5 @@ class Test {
         });
     }
 }
+
+export default new Test();
