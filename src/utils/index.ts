@@ -22,8 +22,8 @@ class Utils implements Utils {
         });
 
         axiosInstance.interceptors.response.use(function (response: any): any {
-            const config = response.config;
-            return config;
+            // const config = response.config;
+            return response;
         }, function (err: any): any {
             return Promise.reject(err);
         });

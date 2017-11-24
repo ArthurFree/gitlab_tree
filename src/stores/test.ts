@@ -14,6 +14,8 @@ class Test {
             baseURL: 'https://cnodejs.org/api/v1',
             url: '/topics',
             params,
+        }).then((response) => {
+            console.log('--- response ---', response);
         });
     }
 }
