@@ -5,7 +5,7 @@ import { Provider } from 'mobx-react';
 
 // import configureStore from './stores';
 import configureStore from 'stores';
-import Test from './views/test';
+import TreePage from './views/tree_view';
 
 const stores = configureStore();
 
@@ -23,8 +23,7 @@ class Root extends React.Component<any, any> {
         return (
             <Provider {...stores}>
                 <div>
-                    Hello react!!!!!!
-                    <Test />
+                    <TreePage />
                 </div>
             </Provider>
         )

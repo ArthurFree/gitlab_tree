@@ -6,6 +6,14 @@ function resolve(pathname) {
 	return path.resolve(__dirname, '..', pathname);
 }
 
+const postcssOpts = {
+    ident: 'postcss',
+    plugins: () => [
+        autoprefixer({
+            browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'Android >= 4']
+        })
+    ]
+};
 
 module.exports = {
 	entry: {
@@ -74,7 +82,7 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
-                        'css-loader', { loader: 'postcss-loader'/* , options: postcssOpts */ }, 'less-loader'
+                        'css-loader', { loader: 'postcss-loader', options: postcssOpts }, 'less-loader'
                     ]
                 })
             },
@@ -83,7 +91,7 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
-                        'css-loader', { loader: 'postcss-loader'/* , options: postcssOpts */ }
+                        'css-loader', { loader: 'postcss-loader', options: postcssOpts }
                     ]
                 })
             }

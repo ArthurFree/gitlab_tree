@@ -4,7 +4,9 @@
         "baseUrl": "./",
         "paths":{
             "stores": ["src/stores/index.ts"],
-            "utils": ["src/utils/index.ts"]
+            "utils": ["src/utils/index.ts"],
+            "assets": ["src/assets"],
+            "components": ["src/components/index.ts"]
         },
 		"sourceMap": true,
 		"noImplicitAny": true,
