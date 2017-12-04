@@ -13,7 +13,7 @@ let _cfg = Object.assign({}, webpackBaseConfig, {
     devtool: 'cheap-eval-source-map',
     entry: {
         'app': [
-            'webpack-dev-server/client?http://127.0.0.0:8080',
+            'webpack-dev-server/client?http://localhost:8080',
             'webpack/hot/only-dev-server',
             path.resolve(__dirname, '..', 'src/index')
         ]
@@ -86,5 +86,15 @@ _cfg.plugins = webpackBaseConfig.plugins
 		// ])
 	])
 	.concat(getHtmlChunks())
+
+_cfg.devServer = {
+	inline: true,
+	compress: true,
+	contentBase: path.resolve(__dirname, '..', './dist'),
+	disableHostCheck: true,
+	publicPath: '/',
+	hot: true,
+	port: 8080,
+}
 
 module.exports = _cfg;

@@ -221,7 +221,6 @@ export default class TreeNode extends React.Component<any, any> {
     }
 
     render () {
-        // const { data } = this.props;
         console.log('-- data --',this.state.data);
         return this.renderTree(this.state.data)
     }
