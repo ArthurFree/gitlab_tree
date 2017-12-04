@@ -18,7 +18,8 @@ export default class Tree extends React.Component<any, any> {
         return (
             <div>
                 <ul className="tree_ul">
-                    {React.Children.map(this.props.children, this.renderTreeNode)}
+                    {/* React.Children.map(this.props.children, this.renderTreeNode) */}
+                    {this.props.children}
                 </ul>
             </div>
         )

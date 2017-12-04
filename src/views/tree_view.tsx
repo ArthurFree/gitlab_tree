@@ -23,7 +23,7 @@ export default class TreePage extends React.Component<any, any> {
                 <nav className="gitlabtree_sidebar">
                     <div className="gitlabtree_views">
                         <div className="gitlabtree_view_body">
-                            <ul className="jstree_container_ul">
+                            {/* <ul className="jstree_container_ul">
                                 <li className="jstree-node jstree-closed">1</li>
                                 <li className="jstree-node jstree-closed">2</li>
                                 <li className="jstree-node jstree-closed">3</li>
@@ -42,14 +42,11 @@ export default class TreePage extends React.Component<any, any> {
                                         </li>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul> */}
                         </div>
                     </div>
                     <Tree>
-                        <TreeNode></TreeNode>
-                        <TreeNode></TreeNode>
-                        <TreeNode></TreeNode>
-                        <TreeNode></TreeNode>
+                        <TreeNode />
                     </Tree>
                 </nav>
             </div>
