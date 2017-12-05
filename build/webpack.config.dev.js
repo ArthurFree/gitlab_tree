@@ -13,8 +13,9 @@ let _cfg = Object.assign({}, webpackBaseConfig, {
     devtool: 'cheap-eval-source-map',
     entry: {
         'app': [
-            'webpack-dev-server/client?http://127.0.0.0:8080',
-            'webpack/hot/only-dev-server',
+            // 'webpack-dev-server/client?http://127.0.0.0:8080',
+            // 'webpack/hot/only-dev-server',
+            'webpack-hot-middleware/client?path=http://localhost:8081/__webpack_hmr&reload=true',
             path.resolve(__dirname, '..', 'src/index')
         ]
     }

@@ -45,9 +45,7 @@ export default class TreePage extends React.Component<any, any> {
                             </ul> */}
                         </div>
                     </div>
-                    <Tree>
-                        <TreeNode />
-                    </Tree>
+                    <TreeNode />
                 </nav>
             </div>
         )

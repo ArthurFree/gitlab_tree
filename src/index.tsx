@@ -7,6 +7,8 @@ import { Provider } from 'mobx-react';
 import configureStore from 'stores';
 import TreePage from './views/tree_view';
 
+import 'assets/styles/index.less';
+
 const stores = configureStore();
 
 class Root extends React.Component<any, any> {

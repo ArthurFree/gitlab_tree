@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
+import * as classNames from 'classnames';
+import './tree.less';
 
 const finishData = [
     {
@@ -157,7 +159,6 @@ const clientMockData = [
     }
 ];
 
-
 export default class TreeNode extends React.Component<any, any> {
     // static defaultProps = {
     //     data: finishData
@@ -203,11 +204,30 @@ export default class TreeNode extends React.Component<any, any> {
     }
 
     renderTree = (data: any[]) => {
-
+        const commonClass = ['icon', 'iconfont'];
         let node = data.map((item: any, index: number): any => {
             return (
-                <li key={index}>
-                    { item.name }
+                <li className="tree_node" key={index}>
+
+                    {
+                        !item.leaf ? (
+                            <i className={classNames(...commonClass, {
+                                'tree_icon-triangle': true,
+                                'tree_triangle': true,
+                                'tree_icon-triangle-right': false,
+                                'tree_triangle_right': false
+                            })}></i>
+                        ) : null
+                    }
+
+                    <i className={classNames(...commonClass, {
+                        'tree_icon-folder': !item.leaf,
+                        'tree_folder': !item.leaf,
+                        'tree_icon-file': item.leaf,
+                        'tree_file': item.leaf
+                    })}></i>
+
+                    <span className="tree_node_text">{ item.name }</span>
                     { item.children && !item.leaf && item.children.length !== 0 ? (
                         <ul>
                             { this.renderTree(item.children) }
@@ -222,6 +242,10 @@ export default class TreeNode extends React.Component<any, any> {
 
     render () {
         console.log('-- data --',this.state.data);
-        return this.renderTree(this.state.data)
+        return (
+            <ul className="tree_default tree_container_ul">
+                {this.renderTree(this.state.data)}
+            </ul>
+        )
     }
 }

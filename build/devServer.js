@@ -8,8 +8,7 @@ const compiler = webpack(config);
 
 app.use(require('webpack-dev-middleware')(compiler, {
     publicPath: config.entry.publicPath,
-    // progress: true
-    // quiet: true
+    quiet: true
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
@@ -20,4 +19,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.listen(8080);
+app.get('/hello', (req, res) => {
+    res.send({
+        hello: 'world'
+    })
+})
+
+app.listen(8081);
