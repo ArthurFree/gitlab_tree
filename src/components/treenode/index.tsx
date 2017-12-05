@@ -240,10 +240,14 @@ export default class TreeNode extends React.Component<any, any> {
         return node;
     }
 
+    handleClickTreeNode = (event: any) => {
+        console.log('---- event ----', event.target);
+    }
+
     render () {
         console.log('-- data --',this.state.data);
         return (
-            <ul className="tree_default tree_container_ul">
+            <ul className="tree_default tree_container_ul" onClick={this.handleClickTreeNode}>
                 {this.renderTree(this.state.data)}
             </ul>
         )
