@@ -13,29 +13,54 @@
         padding: 0;
         margin: 0;
         line-height: 1.5;
+        user-select: none;
     }
 
     .tree_node {
-        padding-left: 20px;
-    }
+        padding-left: 15px;
 
-    .tree_node_text {
-        margin-left: 6px;
+        .tree_node_shadow {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            height: 24px;
+            box-sizing: border-box;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            width: 100%;
+            cursor: pointer;
+            z-index: 0;
+        }
+
+        .tree_node_shadow_hover {
+            background-color: #f6fafd;
+            border-top: 1px solid #bdd8f0;
+            border-bottom: 1px solid #bdd8f0;
+        }
+
+        .tree_node_content {
+            position: relative;
+        }
+
+        .tree_node_text {
+            margin-left: 6px;
+            position: relative;
+        }
     }
 
     .tree_folder, .tree_file, .tree_triangle, .tree_triangle_right {
         vertical-align: middle;
+        position: relative;
     }
 
     .tree_file {
         margin-left: 17px;
     }
 
-    .tree_triangle, tree_triangle_right {
+    .tree_triangle, .tree_triangle_right {
         font-size: 15px;
         margin-right: 5px;
         display: inline-block;
         width: 12px;
     }
-
 }

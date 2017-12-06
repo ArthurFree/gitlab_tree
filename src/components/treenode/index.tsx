@@ -171,17 +171,23 @@ export default class TreeNode extends React.Component<any, any> {
 
     componentDidMount() {
         const data = mockData.map((item: any, index: number): any => {
-            console.log('--- item')
+            let pathArr: number[] = [];
             if (item.name === 'client') {
                 return {
+                    index,
                     name: item.name,
                     path: item.path,
                     collapsed: false,
+                    hover: false,
+                    pathIndex: pathArr.push(index),
                     children: clientMockData.map((value: any, ind: number): any => {
                         return {
+                            index: ind,
                             name: value.name,
                             path: value.path,
                             collapsed: false,
+                            hover: false,
+                            pathIndex: pathArr.push(ind),
                             children: [],
                             leaf: value.type !== 'tree'
                         }
@@ -190,9 +196,12 @@ export default class TreeNode extends React.Component<any, any> {
                 }
             }
             return {
+                index,
                 name: item.name,
                 path: item.path,
                 collapsed: false,
+                hover: false,
+                pathIndex: [],
                 children: [],
                 leaf: item.type !== 'tree'
             }
@@ -206,16 +215,21 @@ export default class TreeNode extends React.Component<any, any> {
     renderTree = (data: any[]) => {
         const commonClass = ['icon', 'iconfont'];
         let node = data.map((item: any, index: number): any => {
+            const collapsed = item.collapsed;
             return (
-                <li className="tree_node" key={index}>
+                <li className="tree_node" key={index}
+                    onMouseEnter={this.handleEvent(item, 'hover')}
+                    onMouseLeave={this.handleEvent(item, 'hover')}
+                    onClick={this.handleEvent(item, 'collapsed')}>
 
+                    <div className={classNames('tree_node_shadow', { 'tree_node_shadow_hover': item.hover })}></div>
                     {
                         !item.leaf ? (
                             <i className={classNames(...commonClass, {
-                                'tree_icon-triangle': true,
-                                'tree_triangle': true,
-                                'tree_icon-triangle-right': false,
-                                'tree_triangle_right': false
+                                'tree_icon-triangle': !collapsed,
+                                'tree_triangle': !collapsed,
+                                'tree_icon-triangle-right': collapsed,
+                                'tree_triangle_right': collapsed
                             })}></i>
                         ) : null
                     }
@@ -228,11 +242,18 @@ export default class TreeNode extends React.Component<any, any> {
                     })}></i>
 
                     <span className="tree_node_text">{ item.name }</span>
-                    { item.children && !item.leaf && item.children.length !== 0 ? (
-                        <ul>
-                            { this.renderTree(item.children) }
-                        </ul>
-                    ) : null }
+
+                    {/* <div className="tree_node_content">
+
+                    </div> */}
+
+                    {
+                        item.children && !item.leaf && item.children.length !== 0 ? (
+                            <ul className="tree_inner_ul">
+                                { this.renderTree(item.children) }
+                            </ul>
+                        ) : null
+                    }
                 </li>
             )
         })
@@ -240,14 +261,27 @@ export default class TreeNode extends React.Component<any, any> {
         return node;
     }
 
-    handleClickTreeNode = (event: any) => {
-        console.log('---- event ----', event.target);
+    handleEvent = (currData: any, property: string) => {
+        const self = this;
+        return function (event: any) {
+            event.stopPropagation();
+            console.log('--- event ---', event.target);
+            currData[property] = !currData[property];
+            self.setState({
+                tree: [self.state.tree]
+            });
+        }
+    }
+
+    changeNode = (data: any[], indArr: number[], cb?: any) => {
+        indArr.forEach((item: any, ind: number) => {
+
+        });
     }
 
     render () {
-        console.log('-- data --',this.state.data);
         return (
-            <ul className="tree_default tree_container_ul" onClick={this.handleClickTreeNode}>
+            <ul className="tree_default tree_container_ul">
                 {this.renderTree(this.state.data)}
             </ul>
         )
