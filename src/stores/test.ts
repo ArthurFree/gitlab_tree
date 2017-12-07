@@ -18,6 +18,15 @@ class Test {
             console.log('--- response ---', response);
         });
     }
+
+    @action getTreeFromGitlab(cfg?: any) {
+        utils.ajax({
+            baseURL: 'http://localhost:8081/',
+            url: '/api/v4/projects/fe%2FBs-static-ledger/repository/tree',
+        }).then((res) => {
+            console.log('--- res ---', res);
+        });
+    }
 }
 
 export default new Test();

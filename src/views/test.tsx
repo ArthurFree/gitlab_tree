@@ -3,7 +3,8 @@ import { observer, inject } from 'mobx-react';
 
 @inject((stores: any): any => ({
     list: stores.Test.list,
-    getList: stores.Test.getTree
+    getList: stores.Test.getTree,
+    getTreeFromGitlab: stores.Test.getTreeFromGitlab
 }))
 @observer
 export default class Test extends React.Component<any, any> {
@@ -13,6 +14,7 @@ export default class Test extends React.Component<any, any> {
             page: 1,
             limit: 10
         });
+        this.props.getTreeFromGitlab();
     }
 
     render () {

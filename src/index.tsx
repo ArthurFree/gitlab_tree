@@ -1,11 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
-// import * as React from 'react';
-
-// import configureStore from './stores';
 import configureStore from 'stores';
 import TreePage from './views/tree_view';
+import Test from './views/test';
 
 import 'assets/styles/index.less';
 
@@ -26,6 +24,7 @@ class Root extends React.Component<any, any> {
             <Provider {...stores}>
                 <div>
                     <TreePage />
+                    <Test />
                 </div>
             </Provider>
         )
