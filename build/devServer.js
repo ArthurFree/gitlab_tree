@@ -23,6 +23,11 @@ app.get('/hello', (req, res) => {
     res.send({
         hello: 'world'
     })
-})
+});
+
+app.get('/registry/tree', (req, res) => {
+    // console.log('---req---', req);
+    // console.log('---res---', res);
+});
 
 app.listen(8081);

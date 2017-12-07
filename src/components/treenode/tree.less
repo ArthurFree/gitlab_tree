@@ -7,6 +7,7 @@
 .tree_container_ul {
     position: relative;
     font-size: 14px;
+    padding-left: 15px;
 
     ul, li {
         list-style: none;
@@ -17,7 +18,8 @@
     }
 
     .tree_node {
-        padding-left: 15px;
+        // padding-left: 15px;
+        box-sizing: border-box;
 
         .tree_node_shadow {
             display: inline-block;
@@ -38,8 +40,15 @@
             border-bottom: 1px solid #bdd8f0;
         }
 
+        // .tree_node_shadow:hover {
+        //     background-color: #f6fafd;
+        //     border-top: 1px solid #bdd8f0;
+        //     border-bottom: 1px solid #bdd8f0;
+        // }
+
         .tree_node_content {
             position: relative;
+            cursor: pointer;
         }
 
         .tree_node_text {
@@ -62,5 +71,9 @@
         margin-right: 5px;
         display: inline-block;
         width: 12px;
+    }
+
+    .tree_inner_ul {
+        padding-left: 15px;
     }
 }
