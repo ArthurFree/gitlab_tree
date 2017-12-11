@@ -4,26 +4,28 @@ import 'assets/styles/tree.less';
 import { Tree, TreeNode} from 'components';
 
 @inject((stores: any): any => ({
-    list: stores.Test.list,
-    getList: stores.Test.getTree
+    treeData: stores.Tree.treeData,
+    finalData: stores.Tree.finalData,
+    getTreeList: stores.Tree.getTreeList
 }))
 @observer
 export default class TreePage extends React.Component<any, any> {
-    componentDidMount() {
-        console.log('--- list ---', this.props.list);
-        this.props.getList({
-            page: 1,
-            limit: 10
-        });
+
+    componentWillMount() {
+        this.props.getTreeList();
+    }
+
+    componentWillReceiveProps(nextProps: any) {
+        console.log('-- next --', nextProps.finalData.map((item: any) => item));
     }
 
     render () {
         return (
             <div>
                 <nav className="gitlabtree_sidebar">
-                    <div className="gitlabtree_views">
+                    {/* <div className="gitlabtree_views">
                         <div className="gitlabtree_view_body">
-                            {/* <ul className="jstree_container_ul">
+                            <ul className="jstree_container_ul">
                                 <li className="jstree-node jstree-closed">1</li>
                                 <li className="jstree-node jstree-closed">2</li>
                                 <li className="jstree-node jstree-closed">3</li>
@@ -42,10 +44,10 @@ export default class TreePage extends React.Component<any, any> {
                                         </li>
                                     </ul>
                                 </li>
-                            </ul> */}
+                            </ul>
                         </div>
-                    </div>
-                    <TreeNode />
+                    </div> */}
+                    <TreeNode treeData={this.props.finalData} />
                 </nav>
             </div>
         )

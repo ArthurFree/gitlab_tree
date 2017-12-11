@@ -1,18 +1,34 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { GetTopicParam } from '../interface';
 import utils from 'utils';
 
 class Tree {
     @observable treeData: any = [];
 
-    @action getTreeFromGitlab(cfg?: any) {
+    @action getTreeList(cfg?: any) {
         utils.ajax({
-            baseURL: 'http://172.29.20.24/api/v4',
-            url: '/projects/fe%2FBs-static-ledger/repository/tree'
-        }).then((res) => {
-            console.log('--- res ---', res);
+            url: '/query',
+        }).then((response) => {
+            console.log('--- response ---', response);
+            self.treeData = response.data;
         });
+    }
+
+    @computed get finalData() {
+        return self.treeData.map((item: any, index: number): any => {
+            return {
+                index,
+                name: item.name,
+                path: item.path,
+                collapsed: false,
+                hover: false,
+                pathIndex: [],
+                children: [],
+                leaf: item.type !== 'tree'
+            }
+        })
     }
 }
 
-export default new Tree();
+const self = new Tree();
+export default self;

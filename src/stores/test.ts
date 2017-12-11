@@ -1,6 +1,7 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed, runInAction } from 'mobx';
 import { GetTopicParam } from '../interface';
 import utils from 'utils';
+// import { runInAction } from 'mobx/lib/api/action';
 
 class Test {
     @observable list: any = [];
@@ -10,13 +11,23 @@ class Test {
             page: 1,
             limit: 10,
         };
+        // this.list = [];
         utils.ajax({
             baseURL: 'https://cnodejs.org/api/v1',
             url: '/topics',
             params,
         }).then((response) => {
             console.log('--- response ---', response);
+            // runInAction(() => {
+            //     this.list = response.data.data;
+            // });
+            // this.list = response.data.data;
+            self.list = response.data.data;
         });
+    }
+
+    @computed get changeData() {
+        return this.list.map((item: any) => item.title);
     }
 
     @action getTreeFromGitlab(cfg?: any) {
@@ -29,4 +40,5 @@ class Test {
     }
 }
 
-export default new Test();
+const self = new Test()
+export default self;

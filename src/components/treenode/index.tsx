@@ -160,6 +160,10 @@ const clientMockData = [
 ];
 
 export default class TreeNode extends React.Component<any, any> {
+    constructor(props: any) {
+        super(props);
+        console.log('---- props-data ----', this.props.treeData);
+    }
     // static defaultProps = {
     //     data: finishData
     // }
@@ -170,6 +174,10 @@ export default class TreeNode extends React.Component<any, any> {
     }
 
     isHover: boolean = false
+
+    componentWillReceiveProps(nextProps: any) {
+        console.log('---- props data ----', nextProps.treeData.length);
+    }
 
     componentDidMount() {
         const data = mockData.map((item: any, index: number): any => {

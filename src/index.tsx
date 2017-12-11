@@ -24,7 +24,7 @@ class Root extends React.Component<any, any> {
             <Provider {...stores}>
                 <div>
                     <TreePage />
-                    <Test />
+                    {/* <Test /> */}
                 </div>
             </Provider>
         )

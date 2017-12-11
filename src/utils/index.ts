@@ -1,7 +1,14 @@
 import axios from 'axios';
-import { Param, AjaxConf, UtilsType } from '../interface';
+import { Param, AjaxConf, UtilsType, JsonpParams } from '../interface';
 
 class Utils implements Utils {
+
+    noop() {}
+
+    isFunction(func: any) {
+        return typeof func === 'function';
+    }
+
     ajax(cfg: AjaxConf) {
         let axiosInstance = axios.create({
             // 接口基础地址
@@ -29,6 +36,60 @@ class Utils implements Utils {
         });
 
         return axiosInstance.request(cfg);
+    }
+
+    jsonp(cfg: JsonpParams) {
+        const config = Object.assign({}, {
+            baseURL: 'http://172.29.20.24/api/v4',
+            url: '',
+            params: {},
+            timeout: 5000,
+            success: this.noop,
+            error: this.noop,
+        }, cfg);
+        const self = this;
+        let abortTimeout: any;
+        let responseData: any;
+        let hyphens: string = '?';
+
+        if (!config.url) throw new Error('url不能为空');
+
+        // load/error 事件监听函数
+        function statusEvent(event: any) {
+            clearTimeout(abortTimeout);
+            document.head.removeChild(scriptEle);
+            console.log('--- this ----', this);
+            if (event.type === 'error' || !responseData) {
+                self.isFunction(config.error) && config.error();
+            } else {
+                self.isFunction(config.success) && config.success();
+            }
+
+            console.log('---- success ---', event);
+        }
+
+        const scriptEle = document.createElement('script');
+
+        scriptEle.addEventListener('load', statusEvent, false);
+
+        scriptEle.addEventListener('error', statusEvent, false);
+
+        const query = Object.keys(config.params).map((item: any) => `${item}=${config.params[item]}`).join('&');
+
+        if (config.url.indexOf('?') > -1) {
+            hyphens = '&';
+        }
+
+        scriptEle.src = `${config.baseURL}${config.url}${hyphens}${query}`;
+
+        document.head.appendChild(scriptEle);
+
+        if (config.timeout) {
+            abortTimeout = setTimeout(() => {
+                document.head.removeChild(scriptEle);
+                throw new Error('请求超时!!!');
+            }, config.timeout)
+        }
     }
 }
 

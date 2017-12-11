@@ -1,7 +1,9 @@
 import Test from './test';
+import Tree from './tree';
 
 const stores = {
-    Test
+    Test,
+    Tree
     // ...store
 };
 

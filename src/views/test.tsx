@@ -8,13 +8,22 @@ import { observer, inject } from 'mobx-react';
 }))
 @observer
 export default class Test extends React.Component<any, any> {
-    componentDidMount() {
-        console.log('--- list ---', this.props.list);
+    componentWillMount() {
+        /* const func =  */
         this.props.getList({
             page: 1,
             limit: 10
         });
-        this.props.getTreeFromGitlab();
+        // console.log('----func ---', func);
+        // func.then((data: any) => {
+        //     console.log('-- daat', data);
+
+        // })
+        // this.props.getTreeFromGitlab();
+    }
+
+    componentWillReceiveProps(nextProps: any) {
+        console.log('--- nexrProps ---', nextProps.list.length);
     }
 
     render () {
