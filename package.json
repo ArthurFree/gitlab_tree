@@ -6,6 +6,7 @@
   "scripts": {
     "devserver": "webpack-dev-server --config build/webpack.config.dev.js --progress --colors --hot --inline",
     "start": "node build/devServer.js",
+    "dll": "webpack --config build/webpack.config.dll.js --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

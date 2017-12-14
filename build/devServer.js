@@ -9,6 +9,8 @@ const compiler = webpack(config);
 
 app.use(require('webpack-dev-middleware')(compiler, {
     publicPath: config.entry.publicPath,
+    // colors: true,
+    // progress: true,
     quiet: true
 }));
 
