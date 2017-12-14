@@ -10,3 +10,5 @@
 -  [ ] 添加CI流程
 -  [ ] 添加git hook机制
 -  [ ] 编写bash部署脚本
+-  [ ] webpack增加dll处理
+-  [ ] 生产使用preact代替
