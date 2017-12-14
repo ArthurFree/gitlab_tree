@@ -176,7 +176,10 @@ export default class TreeNode extends React.Component<any, any> {
     isHover: boolean = false
 
     componentWillReceiveProps(nextProps: any) {
-        console.log('---- props data ----', nextProps.treeData.length);
+        console.log('---- componentWillReceiveProps props data ----'/* , nextProps.treeData.slice()[0].children.slice() */);
+        this.setState({
+            data: nextProps.treeData
+        });
     }
 
     componentDidMount() {
@@ -217,20 +220,20 @@ export default class TreeNode extends React.Component<any, any> {
             }
         });
 
-        this.setState({
-            data,
-        });
+        // this.setState({
+        //     data,
+        // });
     }
 
     renderTree = (data: any[]) => {
         const commonClass = ['icon', 'iconfont'];
-        let node = data.map((item: any, index: number): any => {
+        let node = data.map((item: any, index: number, arr: any[]): any => {
             const collapsed = item.collapsed;
             return (
                 <li className="tree_node" key={index}
                     // onMouseEnter={this.handleMouse(item, true, this.handleMouseCb)}
                     // onMouseLeave={this.handleMouse(item, false, this.handleMouseCb)}
-                    onClick={this.handleClick(item)}>
+                    onClick={this.handleClick(item, arr)}>
 
                     <div className={ classNames('tree_node_shadow', { 'tree_node_shadow_hover': item.hover }) }
                         onMouseEnter={this.handleMouseEnter(item)}
@@ -278,9 +281,11 @@ export default class TreeNode extends React.Component<any, any> {
         return node;
     }
 
-    handleClick = (currData: any) => {
+    handleClick = (currData: any, arr: any[]) => {
         const self = this;
         return function (event: any) {
+            const { onExpand } = self.props;
+            if (onExpand && typeof onExpand === 'function') onExpand(currData, arr);
             self.handleCommonMouse.call(self, currData, 'collapsed', true, event);
         }
     }
@@ -313,9 +318,10 @@ export default class TreeNode extends React.Component<any, any> {
     }
 
     render () {
+        const { data } = this.state;
         return (
             <ul className="tree_default tree_container_ul">
-                {this.renderTree(this.state.data)}
+                {this.renderTree(data)}
             </ul>
         )
     }

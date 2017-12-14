@@ -6,20 +6,68 @@ import { Tree, TreeNode} from 'components';
 @inject((stores: any): any => ({
     treeData: stores.Tree.treeData,
     finalData: stores.Tree.finalData,
-    getTreeList: stores.Tree.getTreeList
+    getTreeList: stores.Tree.getTreeList,
+    updateData: stores.Tree.updateData
 }))
 @observer
 export default class TreePage extends React.Component<any, any> {
 
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            data: []
+        }
+    }
+
     componentWillMount() {
-        this.props.getTreeList();
+        this.props.getTreeList().then((response: any) => {
+            // this.props.updateData(response.data);
+            this.setState({
+                data: this.modifyData(response.data)
+            });
+        });
     }
 
     componentWillReceiveProps(nextProps: any) {
-        console.log('-- next --', nextProps.finalData.map((item: any) => item));
+        // console.log('-- next --', nextProps.finalData.map((item: any) => item));
+    }
+
+    handleExpand = (data: any, arr: any[]) => {
+        // console.log('--- treepage data --', data);
+        // data.children = [];
+        // console.log('--- treepage arr --', arr.slice()[0].children.slice());
+        if (data.leaf === true || data.children.length !== 0) return;
+        this.props.getTreeList({
+            params: {
+                path: 'client'
+            }
+        }).then((response: any) => {
+            data.children = data.children.concat(this.modifyData(response.data));
+            this.setState({
+                data: arr
+            });
+            // console.log('--- treepage after arr --', arr.slice()[0].children.slice());
+            // this.props.updateData(arr);
+        });
+    }
+
+    modifyData = (data: any) => {
+        return data.map((item: any, index: any): any => {
+            return {
+                index,
+                name: item.name,
+                path: item.path,
+                collapsed: false,
+                hover: false,
+                pathIndex: [],
+                children: [],
+                leaf: item.type !== 'tree'
+            }
+        });
     }
 
     render () {
+        const { data } = this.state;
         return (
             <div>
                 <nav className="gitlabtree_sidebar">
@@ -47,7 +95,7 @@ export default class TreePage extends React.Component<any, any> {
                             </ul>
                         </div>
                     </div> */}
-                    <TreeNode treeData={this.props.finalData} />
+                    <TreeNode treeData={data} onExpand={this.handleExpand} />
                 </nav>
             </div>
         )

@@ -9,6 +9,8 @@ class Utils implements Utils {
         return typeof func === 'function';
     }
 
+    deepEqual() {}
+
     ajax(cfg: AjaxConf) {
         let axiosInstance = axios.create({
             // 接口基础地址

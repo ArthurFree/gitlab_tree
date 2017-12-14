@@ -6,16 +6,14 @@ class Tree {
     @observable treeData: any = [];
 
     @action getTreeList(cfg?: any) {
-        utils.ajax({
+        cfg = cfg || {};
+        return utils.ajax(Object.assign({
             url: '/query',
-        }).then((response) => {
-            console.log('--- response ---', response);
-            self.treeData = response.data;
-        });
+        }, cfg));
     }
 
-    @computed get finalData() {
-        return self.treeData.map((item: any, index: number): any => {
+    @action updateData(data: any) {
+        self.treeData = data.map((item: any, index: number): any => {
             return {
                 index,
                 name: item.name,
@@ -26,8 +24,27 @@ class Tree {
                 children: [],
                 leaf: item.type !== 'tree'
             }
-        })
+        });
     }
+
+    @computed get finalData() {
+        return self.treeData.map((item: any) => item);
+    }
+
+    // @computed get finalData() {
+    //     return self.treeData.map((item: any, index: number): any => {
+    //         return {
+    //             index,
+    //             name: item.name,
+    //             path: item.path,
+    //             collapsed: false,
+    //             hover: false,
+    //             pathIndex: [],
+    //             children: [],
+    //             leaf: item.type !== 'tree'
+    //         }
+    //     })
+    // }
 }
 
 const self = new Tree();
