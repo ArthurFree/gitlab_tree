@@ -6,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const autoprefixer = require('autoprefixer');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
-const webpackBaseConfig = require('./webpack.config.base.js');
+const webpackBaseConfig = require('./webpack.config.base.new.js');
 
 const rootPath = path.join(__dirname, '..');
 const basePath = './tmpl';
@@ -24,7 +24,7 @@ let _cfg = Object.assign({}, webpackBaseConfig, {
     devtool: 'source-map',
 });
 
-_cfg.module.rules = _cfg.module.rules.concat([
+_cfg.module.rules.push(
     {
         test: /\.less$/i,
         use: ExtractTextPlugin.extract({
@@ -32,7 +32,10 @@ _cfg.module.rules = _cfg.module.rules.concat([
             use: [
                 'css-loader', { loader: 'postcss-loader', options: postcssOpts }, 'less-loader'
             ]
-        })
+        }),
+        include: [
+            path.resolve(__dirname, '..', 'src')
+        ]
     },
     {
         test: /\.css$/i,
@@ -41,9 +44,12 @@ _cfg.module.rules = _cfg.module.rules.concat([
             use: [
                 'css-loader', { loader: 'postcss-loader', options: postcssOpts }
             ]
-        })
+        }),
+        include: [
+            path.resolve(__dirname, '..', 'src')
+        ]
     }
-]);
+);
 
 function getHtmlChunks() {
     return new HtmlWebpackPlugin({

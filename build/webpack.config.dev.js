@@ -6,7 +6,7 @@ const autoprefixer = require('autoprefixer');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const formatter = require('eslint-friendly-formatter');
-const webpackBaseConfig = require('./webpack.config.base.js');
+const webpackBaseConfig = require('./webpack.config.base.new.js');
 
 const rootPath = path.join(__dirname, '..');
 const basePath = './tmpl';
@@ -82,7 +82,7 @@ function getHtmlChunks() {
         // filename: path.join(rootPath, 'index.html'),
         filename: path.join(rootPath, 'dist/index.html'),
         inject: true,
-        chunks: ['commons', 'app'],
+        chunks: ['app'],
     })
 }
 

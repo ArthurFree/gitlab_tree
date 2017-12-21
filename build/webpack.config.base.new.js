@@ -95,7 +95,8 @@ module.exports = {
                     limit: 10000,
                     minetype: 'image/svg+xml'
                 }
-            },
+            }
+            /* ,
             {
                 test: /\.css$/i,
                 use: [
@@ -118,7 +119,7 @@ module.exports = {
                         options: postcssOpts
                     }
                 ]
-            }
+            } */
             /* {
                 test: /\.less$/i,
                 use: ExtractTextPlugin.extract({

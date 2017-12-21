@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '../', 'dist')));
 // app.use('/api', proxy({target: 'http://http://172.29.20.24/', changeOrigin: true}));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
+    res.sendFile(path.join(__dirname, '..', 'dist/index.html'));
 });
 
 const data = [
