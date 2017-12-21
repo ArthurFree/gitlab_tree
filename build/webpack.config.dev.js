@@ -2,13 +2,23 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const formatter = require('eslint-friendly-formatter');
 const webpackBaseConfig = require('./webpack.config.base.js');
 
 const rootPath = path.join(__dirname, '..');
 const basePath = './tmpl';
+
+const postcssOpts = {
+    ident: 'postcss',
+    plugins: () => [
+        autoprefixer({
+            browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'Android >= 4']
+        })
+    ]
+};
 
 let _cfg = Object.assign({}, webpackBaseConfig, {
     devtool: 'cheap-eval-source-map',
@@ -37,6 +47,29 @@ _cfg.module.rules = [
         options: {
             formatter,
         }
+    },
+    {
+        test: /\.css$/i,
+        use: [
+            'style-loader',
+            'css-loader',
+            {
+                loader: 'postcss-loader',
+                options: postcssOpts
+            }
+        ]
+    },
+    {
+        test: /\.less$/i,
+        use: [
+            'style-loader',
+            'css-loader',
+            'less-loader',
+            {
+                loader: 'postcss-loader',
+                options: postcssOpts
+            }
+        ]
     }
 ].concat(_cfg.module.rules);
 
@@ -58,10 +91,15 @@ _cfg.plugins = webpackBaseConfig.plugins
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'commons',
-            filename: 'commons.js',
+        new webpack.DefinePlugin({
+            'process.env': {
+                "NODE_ENV": JSON.stringify('dev')
+            }
         }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'commons',
+        //     filename: 'commons.js',
+        // }),
         new webpack.LoaderOptionsPlugin({
             debug: true,
             options: {
@@ -70,16 +108,12 @@ _cfg.plugins = webpackBaseConfig.plugins
                     configFile: '.eslintrc.js'
                 }
             }
-        }),
-        new ExtractTextPlugin({
-            filename: '[name].css',
-            allChunks: true,
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                "NODE_ENV": JSON.stringify('dev')
-            }
-        }),
+        })
+        // new ExtractTextPlugin({
+        //     filename: '[name].css',
+        //     allChunks: true,
+        // }),
+
         // new CopyWebpackPlugin([
         // 	{
         // 		from: path.join(rootPath, 'src/lib'),
